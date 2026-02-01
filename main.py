@@ -17,6 +17,7 @@ def main():
     print("=" * 80)
 
     # Load dataset 
+    
     records = load_dataset(CSV_FILE)
 
     # Loop through records and display from
