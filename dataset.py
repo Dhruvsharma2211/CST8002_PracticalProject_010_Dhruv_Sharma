@@ -8,7 +8,7 @@
 import csv # library usage
 from record import Record # import record class
 
-def load_dataset(file_path, max_records=5):
+def load_dataset(file_path, max_records=20):
     records = [] #list to store record object
     try: 
         # opening CSV file 
