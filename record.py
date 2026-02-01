@@ -62,8 +62,8 @@ class Record:
         return (
             f"Site: {self.site_identification},"
             f"Area: {self.area},"
-            f"Date: {self.visit_date},"
-            f"Start Time: {self.start_time},"
+            f"Visit_Date: {self.visit_date},"
+            f"Start_Time: {self.start_time},"
             f"Species: {self.species_code},"
             f"Count: {self.count}"
 
