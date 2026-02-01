@@ -4,7 +4,7 @@
 #Author : Dhruv Sharma 
 # File name: dataset.py
 # This file program entry 
-#Reference : https://realpython.com/read-write-files-python/
+#Reference : L. P. Ramos, "method," 19 Sep 2025. [Online]. Available: https://realpython.com/ref/glossary/method/. [Accessed 01 Feb 2026].
 from dataset import load_dataset
 
 # Constants
