@@ -12,9 +12,9 @@ FULL_NAME = "DHRUV SHARMA"
 CSV_FILE = "pacific_rim_npr_coastalmarine_migratory_shorebird_habitat_use_2011-2017_data.csv"
 
 def main():
-    print("=" * 80)
+    print("=" * 100)
     print(f"Student Name: {FULL_NAME}")
-    print("=" * 80)
+    print("=" * 100)
 
     # Load dataset 
     
