@@ -5,6 +5,8 @@
 #Author : Dhruv Sharma 
 # File name: record.py
 # This file defines the record object(Entity / Data transfer object)
+#Reference : w3schools.com, "Python __init__() Method," N.D.. [Online]. Available: https://www.w3schools.com/python/python_class_init.asp. [Accessed 01 Feb 2026].
+#
 
 class Record:
     def __init__(self, site_identification, area, visit_date, start_time, species_code, count):
