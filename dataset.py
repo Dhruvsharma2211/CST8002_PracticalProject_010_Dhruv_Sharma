@@ -4,11 +4,12 @@
 #Author : Dhruv Sharma 
 # File name: dataset.py
 # This file handles File input and output and loading data from CSV file
+# Reference : https://realpython.com/read-write-files-python/
 
 import csv # library usage
 from record import Record # import record class
 
-def load_dataset(file_path, max_records=20):
+def load_dataset(file_path, max_records=2):
     records = [] #list to store record object
     try: 
         # opening CSV file 
