@@ -1,8 +1,8 @@
 # Author : Dhruv Sharma
 #File Name: main.py
 
-from controller.student_controller import StudentController
-from businees.student_service import StudentService
+from practical_project_2.controller.record_controller import StudentController
+from practical_project_2.business.record_service import StudentService
 from persistence.csv_repository import CsvRepository
 from presentation.cli_view import CliView
 
