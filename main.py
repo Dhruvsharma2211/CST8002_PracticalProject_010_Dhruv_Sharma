@@ -2,7 +2,7 @@
 #Professor : Stanley Pieda
 #Due Date : 1st Feb 2026
 #Author : Dhruv Sharma 
-# File name: dataset.py
+# File name: main.py
 # This file program entry 
 #Reference : L. P. Ramos, "method," 19 Sep 2025. [Online]. Available: https://realpython.com/ref/glossary/method/. [Accessed 01 Feb 2026].
 from dataset import load_dataset
