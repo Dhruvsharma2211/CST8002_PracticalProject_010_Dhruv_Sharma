@@ -6,8 +6,8 @@ File name : record_service.py
 """
 
 from typing import List, Optional
-from model.record import Record
-from persistence.csv_repository import CsvRepository
+from practical_project_2.model.record import Record
+from practical_project_2.persistence.csv_repository import CsvRepository
 
 class RecordService:
     def __init__(self, repo: CsvRepository) -> None:
