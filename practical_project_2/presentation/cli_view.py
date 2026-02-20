@@ -6,8 +6,8 @@ File Name : cli_view.py
 """
 
 from typing import Optional
-from controller.record_controller import RecordController
-from model.record import Record, FIELDS
+from practical_project_2.controller.record_controller import RecordController
+from practical_project_2.model.record import Record, FIELDS
 
 class CliView: 
     def __init__(self, controller: RecordController, full_name: str) -> None:
