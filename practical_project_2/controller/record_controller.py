@@ -6,8 +6,8 @@ Controller
 """
 
 from typing import List, Optional
-from model.record import Record
-from business.record_service import RecordService
+from practical_project_2.model.record import Record
+from practical_project_2.business.record_service import RecordService
 
 class RecordController:
     def __init__(self, service: RecordService) -> None:
