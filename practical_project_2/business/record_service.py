@@ -28,8 +28,20 @@ class RecordService:
 
     def get_by_index(self, index: int) -> Optional[Record]:
         if 0 <= index < len(self.records):
-            self.records.pop(index)
+            return self.records[index]
+        return None
+    def add(self, record: Record) -> None:
+        self.records.append(record)
+    
+    def update(self, index: int, record: Record) -> bool:
+        if 0 <= index < len(self.records):
+            self.records[index] = record
             return True
         return False
     
+    def delete(self, index: int) -> bool:
+        if 0 <= index < len(self.records):
+            self.records.pop(index)
+            return True
+        return False
         
