@@ -56,7 +56,7 @@ class CliView:
                 self._edit()
             elif choice =="7":
                 self._delete()
-            elif choice == "8":
+            elif choice == "0":
                 self._banner()
                 print("Bye See you next time..")
                 break
@@ -64,8 +64,8 @@ class CliView:
                 print("oops Invalid choice..")
                 input("Press Enter")
     def _read_index(self) -> Optional[int]:
-        raw = input("enter record index: ").strip()
-        return int(raw) if raw.isdigit else None
+        raw = input("enter record index (0 Based): ").strip()
+        return int(raw) if raw.isdigit() else None
     
     def _print_record(self, index: int, rec: Record) -> None:
         print("-" * 60)
@@ -74,7 +74,7 @@ class CliView:
             print(f"{f}: {rec.data.get(f, '')}")
         print("-" * 60)
 
-    def _record(self) -> None:
+    def _reload(self) -> None:
         try:
             self.controller.reload_data()
             print("Reloaded Dataset successfully")
@@ -123,47 +123,47 @@ class CliView:
         
         input("Preess Enter..")
 
-        def _create(self) -> None:
-            rec = Record.empty()
-            print("Enter Values for each field: ")
-            for f in FIELDS:
-                rec.data[f] = input(f"{f}: ").strip()
-            self.controller.add(rec)
-            print("Recprd added..")
-            input("Press Enter..")
+    def _create(self) -> None:
+        rec = Record.empty()
+        print("Enter Values for each field: ")
+        for f in FIELDS:
+            rec.data[f] = input(f"{f}: ").strip()
+        self.controller.add(rec)
+        print("Recprd added..")
+        input("Press Enter..")
 
-        def _edit(self) -> None:
-            idx = self._read_index()
-            if idx is None:
-                print("Invalid Index..")
-                input("Press Enter")
-                return
-            rec = self.controller.get_one(idx)
-            if rec is None: 
-                print("Record not found")
-                input("press enter..")
-                return
-            new_rec = Record.empty()
-            print("Press Enter to keep existing value.")
-            for f in FIELDS:
-                current = rec.data.get(f, "")
-                new_val = input(f"{f} [{current}]: ").strip()
-                new_rec.data[f] = new_val if new_val != "" else current
+    def _edit(self) -> None:
+        idx = self._read_index()
+        if idx is None:
+            print("Invalid Index..")
+            input("Press Enter")
+            return
+        rec = self.controller.get_one(idx)
+        if rec is None: 
+            print("Record not found")
+            input("press enter..")
+            return
+        new_rec = Record.empty()
+        print("Press Enter to keep existing value.")
+        for f in FIELDS:
+            current = rec.data.get(f, "")
+            new_val = input(f"{f} [{current}]: ").strip()
+            new_rec.data[f] = new_val if new_val != "" else current
             
-            print("Updated." if self.controller.edit(idx, new_rec) else "Update Failed")
-            input("Enter PRess..")
+        print("Updated." if self.controller.edit(idx, new_rec) else "Update Failed")
+        input("Enter PRess..")
 
-        def _delete(self) -> None:
-            idx = self._read_index()
-            if idx is None:
-                print("Invalid Index")
-                print("Press Enter")
-                return
-            confirm = input("are you sure? (y/n): ").strip().lower()
-            if confirm != "y":
-                print("Canclled..")
-                input("Press enter...")
-                return
+    def _delete(self) -> None:
+        idx = self._read_index()
+        if idx is None:
+            print("Invalid Index")
+            print("Press Enter")
+            return
+        confirm = input("are you sure? (y/n): ").strip().lower()
+        if confirm != "y":
+            print("Canclled..")
+            input("Press enter...")
+            return
             
-            print("Deleted." if self.controller.delete(idx) else "Delete Failed")
-            input("Press Enter..")
+        print("Deleted." if self.controller.delete(idx) else "Delete Failed")
+        input("Press Enter..")
