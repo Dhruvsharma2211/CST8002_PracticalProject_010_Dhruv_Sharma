@@ -49,6 +49,7 @@ Identification du site,Secteur,Date de la visite,Heure de début,Code de l’espèce
 1,4,30/04/2015,7:50:00 AM,LESA,2
 1,4,30/04/2015,7:50:00 AM,SEPL,27
 1,4,30/04/2015,7:50:00 AM,WESA,150
+1,4,30/04/2015,7:50:00 AM,DKS,150
 1,4,14/05/2015,2:25:00 PM,BBPL,5
 1,4,14/05/2015,2:25:00 PM,DUNL,2
 1,4,14/05/2015,2:25:00 PM,WESA,5
@@ -2124,3 +2125,4 @@ Identification du site,Secteur,Date de la visite,Heure de début,Code de l’espèce
 20,3,15/08/2017,10:03:00 AM,RNPH,3
 20,3,15/08/2017,10:03:00 AM,WESA,1
 20,3,24/08/2017,1:31:00 PM,WESA,2
+20,3,24/08/2017,1:31:00 PM,WESA,1212
