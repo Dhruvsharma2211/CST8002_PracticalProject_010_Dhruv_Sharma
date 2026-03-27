@@ -29,4 +29,5 @@ class Record:
     @staticmethod
     def empty() -> "Record":
         return Record({field: ""for field in FIELDS})
-    
+    def get_value(self, field_name: str) -> Any:
+        return self.data.get(field_name,"")
