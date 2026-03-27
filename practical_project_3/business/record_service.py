@@ -10,8 +10,8 @@ Reference:
 """
 
 from typing import List, Optional
-from practical_project_2.model.record import Record
-from practical_project_2.persistence.csv_repository import CsvRepository
+from practical_project_3.model.record import Record
+from practical_project_3.persistence.csv_repository import CsvRepository
 
 class RecordService:
     def __init__(self, repo: CsvRepository) -> None:

@@ -7,10 +7,10 @@ Reference:
 [3] 	C. Team, "MVC Architecture Explained: Model, View, Controller," codecademy.com, N.D.. [Online]. Available: https://www.codecademy.com/article/mvc-architecture-model-view-controller. [Accessed 22 Feb 2026].
 """
 
-from practical_project_2.controller.record_controller import RecordController
-from practical_project_2.business.record_service import RecordService
-from practical_project_2.persistence.csv_repository import CsvRepository
-from practical_project_2.presentation.cli_view import CliView
+from practical_project_3.controller.record_controller import RecordController
+from practical_project_3.business.record_service import RecordService
+from practical_project_3.persistence.csv_repository import CsvRepository
+from practical_project_3.presentation.cli_view import CliView
 
 def main() -> None:
     dataset_path = "practical_project_2/" \
