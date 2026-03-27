@@ -13,7 +13,7 @@ from practical_project_3.persistence.csv_repository import CsvRepository
 from practical_project_3.presentation.cli_view import CliView
 
 def main() -> None:
-    dataset_path = "practical_project_2/" \
+    dataset_path = "practical_project_3/" \
     "dataset/pacific_rim_npr_coastalmarine_migratory_shorebird_habitat_use_2011-2017_data.csv"
 
     repo = CsvRepository(dataset_path=dataset_path)
