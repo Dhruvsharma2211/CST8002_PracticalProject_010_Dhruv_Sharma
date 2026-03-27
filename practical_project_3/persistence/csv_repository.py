@@ -13,7 +13,7 @@ import uuid
 from pathlib import Path
 from typing import List
 
-from practical_project_2.model.record import Record, FIELDS
+from practical_project_3.model.record import Record, FIELDS
 
 class CsvRepository:
     def __init__(self, dataset_path: str) -> None:
