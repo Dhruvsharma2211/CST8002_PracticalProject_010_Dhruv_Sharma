@@ -48,4 +48,17 @@ class RecordService:
             self.records.pop(index)
             return True
         return False
+    def sort_records(self, field_name: str, descending: bool = False) -> bool:
+        if field_name not in FIELDS:
+            return False
+        def sort_key(record: Record):
+            value = str(record.get_value(field_name)).strip()
+            if field_name == "Count":
+                try:
+                    return int(value)
+                except ValueError:
+                    return 0
+            return value.lower()
+        self.records = sorted(self.records, key=sort_key, reverse=descending)
+        return True
         
