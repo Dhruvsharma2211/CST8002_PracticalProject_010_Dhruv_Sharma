@@ -10,7 +10,7 @@ Reference:
 """
 
 from typing import List, Optional
-from practical_project_3.model.record import Record
+from practical_project_3.model.record import Record, FIELDS
 from practical_project_3.persistence.csv_repository import CsvRepository
 
 class RecordService:
