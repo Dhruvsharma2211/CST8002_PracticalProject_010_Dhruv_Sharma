@@ -40,3 +40,5 @@ class RecordController:
     
     def delete(self, index: int) -> bool:
         return self.service.delete(index)
+    def sort_records(self, field_name: str, descending: bool = False) -> bool:
+        return self.service.sort_records(field_name, descending)
