@@ -1,7 +1,11 @@
 """
+Course:  CST8002 - Programming Language Research
 Author : Dhruv Sharma
+Professor : Stanley Pieada
+Due Date: 29th March 2026
  Persistence layer: CSV file input output + UUID export
 File name : csv_repository.py
+THis file handles reading data from CSV file and exporting records to a new CSV file wih a UUID filename
 Reference:
 [1] 	w3schools.com, "Python List sort() Method," w3schools.com, N.A.. [Online]. Available: https://www.w3schools.com/python/ref_list_sort.asp. [Accessed 28 March 2026].
 [2] 	A. Dalke and H. Raymond, "Sorting Techniques," docs.python.org, N.A.. [Online]. Available: https://docs.python.org/3/howto/sorting.html#ascending-and-descending. [Accessed 28 March 2026].

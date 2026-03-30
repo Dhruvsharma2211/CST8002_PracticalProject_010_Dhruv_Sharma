@@ -1,7 +1,11 @@
 """
+Course:  CST8002 - Programming Language Research
 Author : Dhruv Sharma
+Professor : Stanley Pieada
+Due Date: 29th March 2026
 File name : record.py
-Description: This file defines model used to store one dataset row
+Description: This file defines model used to store one dataset row from the dataset. 
+It also defines the dataset fields used throughout the application
 Reference:
 [1] 	w3schools.com, "Python List sort() Method," w3schools.com, N.A.. [Online]. Available: https://www.w3schools.com/python/ref_list_sort.asp. [Accessed 28 March 2026].
 [2] 	A. Dalke and H. Raymond, "Sorting Techniques," docs.python.org, N.A.. [Online]. Available: https://docs.python.org/3/howto/sorting.html#ascending-and-descending. [Accessed 28 March 2026].
@@ -13,7 +17,7 @@ Reference:
 """
 from dataclasses import dataclass
 from typing import Dict, Any, List
-
+# List [str]: Dataset colunm names used through tthe application
 FIELDS: List[str] = [
     "Site identification",
     "Area",
@@ -26,8 +30,9 @@ FIELDS: List[str] = [
 @dataclass
 class Record:
     """
-    Stores one row from the dataset
-    we keep a dict using the dataset column names as key.
+    Represent a single dataset for record
+    Attributes :
+        Data (Dict) : Stores column  values pairs the record
     """
     data: Dict[str, Any]
 

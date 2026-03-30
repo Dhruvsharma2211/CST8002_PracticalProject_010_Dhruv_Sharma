@@ -1,7 +1,11 @@
 """
+Course:  CST8002 - Programming Language Research
 Author : Dhruv Sharma
+Professor : Stanley Pieada
+Due Date: 29th March 2026
 Business Layer : in-memory list + CRUD
 File name : record_service.py
+This file contains the business logic of the application including CRUD operation and sorting algorithm implemented for the project 3.
 Reference:
 
 [1] 	w3schools.com, "Python List sort() Method," w3schools.com, N.A.. [Online]. Available: https://www.w3schools.com/python/ref_list_sort.asp. [Accessed 28 March 2026].
@@ -53,6 +57,18 @@ class RecordService:
             return True
         return False
     def sort_records(self, field_name: str, descending: bool = False) -> bool:
+        """
+        Sort records based on a selected dataset column.
+        THis method implements the project 3 requirement
+        
+        Args:
+            Fileld_name  (str): Filed used for sorting
+            descending(bool): True for descending order.
+        
+        returns: 
+        bool: True IF soting successful, otherwise False.
+        """ 
+        
         if field_name not in FIELDS:
             return False
         def sort_key(record: Record):

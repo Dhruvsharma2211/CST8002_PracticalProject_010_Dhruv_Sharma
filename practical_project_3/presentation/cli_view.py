@@ -1,8 +1,13 @@
 """
-Author : DHRuv SHarma
-
+Course:  CST8002 - Programming Language Research
+Author : Dhruv Sharma
+Professor : Stanley Pieada
+Due Date: 29th March 2026
 Presentation Layer : Console menu
 File Name : cli_view.py
+This file implements command line interface for the application, It allows user
+to perform CRUD operations, reload data, expoert data, and use the sorting feature.
+
 Reference:
 
 [1] 	w3schools.com, "Python List sort() Method," w3schools.com, N.A.. [Online]. Available: https://www.w3schools.com/python/ref_list_sort.asp. [Accessed 28 March 2026].

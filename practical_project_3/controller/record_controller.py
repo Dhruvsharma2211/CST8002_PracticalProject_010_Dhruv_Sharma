@@ -1,8 +1,14 @@
 """
-Author : DHRUV sharma
+Course:  CST8002 - Programming Language Research
+Author : Dhruv Sharma
+Professor : Stanley Pieada
+Due Date: 29th March 2026
 Controller : connects view -> Business
 File Name : record_controller.py
 Controller
+This File defines the controller layer that connects the user interface with the business logic layer. It handles requests from the view and passes them to the service layer.
+It hanfdles requeest from the view and passes them to the service layer.
+
 Reference:
 [1] 	w3schools.com, "Python List sort() Method," w3schools.com, N.A.. [Online]. Available: https://www.w3schools.com/python/ref_list_sort.asp. [Accessed 28 March 2026].
 [2] 	A. Dalke and H. Raymond, "Sorting Techniques," docs.python.org, N.A.. [Online]. Available: https://docs.python.org/3/howto/sorting.html#ascending-and-descending. [Accessed 28 March 2026].
