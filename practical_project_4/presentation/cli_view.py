@@ -52,6 +52,7 @@ class CliView:
             print("6] Edit record")
             print("7] Delete a record")
             print("8] Sort records by column")
+            print("9] Sort records by Multiple columns")
             print("0] Exit.....")
             choice = input("\n Choose an Option: ").strip()
 
@@ -72,6 +73,8 @@ class CliView:
             elif choice =="7":
                 self._delete()
             elif choice == "8":
+                self._sort_records()
+            elif choice == "9":
                 self._sort_records()
             elif choice == "0":
                 self._banner()
@@ -137,7 +140,6 @@ class CliView:
             if i % 10 == 0:
                 print(f"\n Program By {self.full_name} (records {i} to {min(i+9, n-1)})")
             self._print_record(i, records[i])
-        
         input("Preess Enter..")
 
     def _create(self) -> None:
@@ -188,15 +190,10 @@ class CliView:
         print("\n Available fields for sorting")
         for index, field in enumerate(FIELDS, start=1):
             print(f"{index}] {field}")
-        
-        raw_field = input("Enter exect field name to sort by :").strip()
-        order = input("ENter a for ascending or D to descending: ").strip().upper()
-        descending = order == "D"
-
-        success = self.controller.sort_records(raw_field, descending)
+        text = input("Enter sort (example: Area asc, Count desc):")
+        success = self.controller.sort_records_multi_from_text(text)
         if success:
-            direction = "descending" if descending else "ascending"
-            print(f"Records sorted by '{raw_field}' in {direction} order.")
+            print("Records sorted successfully.")
         else:
             print("Sorting failed. Please enter a valid field name.")
         input("Press Enter to continue...")

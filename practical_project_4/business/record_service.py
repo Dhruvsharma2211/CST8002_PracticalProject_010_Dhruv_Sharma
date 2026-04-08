@@ -20,7 +20,8 @@ Reference:
 from typing import List, Optional
 from practical_project_3.model.record import Record, FIELDS
 from practical_project_3.persistence.csv_repository import CsvRepository
-
+from typing import Tuple 
+SortInstruction = Tuple[str, bool] 
 class RecordService:
     def __init__(self, repo: CsvRepository) -> None:
         self.repo = repo
@@ -56,6 +57,7 @@ class RecordService:
             self.records.pop(index)
             return True
         return False
+    
     def sort_records(self, field_name: str, descending: bool = False) -> bool:
         """
         Sort records based on a selected dataset column.
@@ -81,4 +83,47 @@ class RecordService:
             return value.lower()
         self.records = sorted(self.records, key=sort_key, reverse=descending)
         return True
-        
+    def sort_records_multi(self, instructions): #Dhruv Sharma
+        if not instructions:
+            return False
+        for field_name, _ in instructions:
+            if field_name not in FIELDS:
+                return False
+        for field_name, descending in reversed(instructions):
+            if field_name not in FIELDS:
+                return False
+        for field_name, descending in reversed(instructions):
+            self.records = sorted(
+                self.records, 
+                key=lambda r: str(r.get_value(field_name)).strip().lower()
+                if field_name != "Count" 
+                else int(r.get_value(field_name)) if str(r.get_value(field_name)).isdigit() else 0,
+                reverse=descending
+            )
+        return True 
+    def parse_sort_expression(self, text):
+        if not text.strip():
+            return None
+        parts = [p.strip() for p in text.split(",") if p.strip()]
+        instructions = []
+        for part in parts:
+            part_lower = part.lower()
+            matched = False
+            for field in FIELDS:
+                f = field.lower()
+                if part_lower == f:
+                    instructions.append((field, False))
+                    matched = True
+                    break
+
+                elif part_lower == f + " asc" or part_lower == f + " ascending":
+                    instructions.append((field, False))
+                    matched = True
+                    break
+                elif part_lower == f + " desc" or part_lower == f + " descending":
+                    instructions.append((field, True))
+                    matched = True
+                    break
+            if not matched:
+                return None 
+        return instructions

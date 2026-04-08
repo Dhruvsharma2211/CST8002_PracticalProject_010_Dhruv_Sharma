@@ -52,3 +52,9 @@ class RecordController:
         return self.service.delete(index)
     def sort_records(self, field_name: str, descending: bool = False) -> bool:
         return self.service.sort_records(field_name, descending)
+    def sort_records_multi_from_text(self, text):
+        instructions = self.service.parse_sort_expression(text) #Dhruv Sharma
+        if instructions is None:
+            return False
+        
+        return self.service.sort_records_multi(instructions)
