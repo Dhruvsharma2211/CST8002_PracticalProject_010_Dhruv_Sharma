@@ -20,8 +20,8 @@ Reference:
 """
 
 from typing import List, Optional
-from practical_project_3.model.record import Record
-from practical_project_3.business.record_service import RecordService
+from practical_project_4.model.record import Record
+from practical_project_4.business.record_service import RecordService
 
 class RecordController:
     def __init__(self, service: RecordService) -> None:

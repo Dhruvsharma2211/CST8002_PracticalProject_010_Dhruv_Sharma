@@ -20,8 +20,8 @@ Reference:
 """
 
 from typing import Optional
-from practical_project_3.controller.record_controller import RecordController
-from practical_project_3.model.record import Record, FIELDS
+from practical_project_4.controller.record_controller import RecordController
+from practical_project_4.model.record import Record, FIELDS
 
 class CliView: 
     def __init__(self, controller: RecordController, full_name: str) -> None:

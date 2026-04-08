@@ -18,8 +18,8 @@ Reference:
 """
 
 from typing import List, Optional
-from practical_project_3.model.record import Record, FIELDS
-from practical_project_3.persistence.csv_repository import CsvRepository
+from practical_project_4.model.record import Record, FIELDS
+from practical_project_4.persistence.csv_repository import CsvRepository
 from typing import Tuple 
 SortInstruction = Tuple[str, bool] 
 class RecordService:
