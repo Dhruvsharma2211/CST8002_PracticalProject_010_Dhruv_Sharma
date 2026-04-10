@@ -6,6 +6,7 @@ Due Date: 29th March 2026
 Business Layer : in-memory list + CRUD
 File name : record_service.py
 This file contains the business logic of the application including CRUD operation and sorting algorithm implemented for the project 3.
+The RecordService class provides methods to manage records in memory, including loading data from a CSV file, adding, updating, deleting records, and sorting them based on specified fields. It also includes methods to parse sort and search expressions from text input. The service interacts with the CsvRepository to load and export data as needed.
 Reference:
 
 [1] 	w3schools.com, "Python List sort() Method," w3schools.com, N.A.. [Online]. Available: https://www.w3schools.com/python/ref_list_sort.asp. [Accessed 28 March 2026].
@@ -17,42 +18,81 @@ Reference:
 [6] 	C. Team, "MVC Architecture Explained: Model, View, Controller," codecademy.com, N.D.. [Online]. Available: https://www.codecademy.com/article/mvc-architecture-model-view-controller. [Accessed 22 Feb 2026].
 """
 
-from typing import List, Optional
+
+from typing import List, Optional, Dict
 from practical_project_4.model.record import Record, FIELDS
 from practical_project_4.persistence.csv_repository import CsvRepository
 from typing import Tuple 
 SortInstruction = Tuple[str, bool] 
+SearchInstruction = Tuple[str, str]
+"""This file contains the business logic of the application including CRUD operation and sorting algorithm implemented for the project 3.       
+The RecordService class provides methods to manage records in memory, including loading data from a CSV file, adding, updating, deleting records, and sorting them based on specified fields. It also includes methods to parse sort and search expressions from text input. The service interacts with the CsvRepository to load and export data as needed.
+"""
 class RecordService:
     def __init__(self, repo: CsvRepository) -> None:
+        """Initialize the RecordService with a CSV repository.
+        Args:      repo (CsvRepository): The repository to load and save records.
+        Returns:    None    
+        """
         self.repo = repo
         self.records: List[Record] = []
 
     def startup_load(self) -> None:
+        """Load the first 100 records from the CSV file into memory when the application starts.
+        Returns:      None  
+        """
         self.records = self.repo.load_first_100()
     
     def reload(self) -> None:
+        """Reload the dataset, replacing the in-memory data with the first 100 records from the CSV file.       
+        Returns:      None
+        """
         self.records = self.repo.load_first_100()
 
     def export(self) -> str:
+        """Export the current in-memory records to a new CSV file with a UUID filename.
+        Returns:      str: The file path of the exported CSV file.
+        """
         return str(self.repo.export_to_new_csv(self.records))
     
     def list_all(self) -> List[Record]:
+        """List all records currently in memory.
+        Returns:      List[Record]: A list of all records currently stored in memory.           
+        """
         return self.records
 
+
     def get_by_index(self, index: int) -> Optional[Record]:
+        """Get a record by its index in the list.
+        Args:         index (int): The index of the record to retrieve.
+        Returns:      Optional[Record]: The record at the specified index, or None if the index is out of range.
+        """
         if 0 <= index < len(self.records):
             return self.records[index]
         return None
     def add(self, record: Record) -> None:
+        """Add a new record to the in-memory list.
+        Args:         record (Record): The record to add.       
+        Returns:      None
+        """
         self.records.append(record)
     
     def update(self, index: int, record: Record) -> bool:
+        """Update a record at a specific index.
+        Args:         index (int): The index of the record to update.
+               record (Record): The new record data to replace the existing record.
+        Returns:      bool: True if the update is successful, otherwise False.      
+        """
         if 0 <= index < len(self.records):
             self.records[index] = record
             return True
         return False
     
     def delete(self, index: int) -> bool:
+        """Delete a record by index.
+        Args:         index (int): The index of the record to delete.       
+        Returns:      bool: True if deletion is successful, otherwise False.
+        """
         if 0 <= index < len(self.records):
             self.records.pop(index)
             return True
@@ -84,6 +124,12 @@ class RecordService:
         self.records = sorted(self.records, key=sort_key, reverse=descending)
         return True
     def sort_records_multi(self, instructions): #Dhruv Sharma
+        """Sort records based on multiple sort instructions.
+        Args:
+            instructions (List[SortInstruction]): A list of sort instructions as (field, descending) tuples.
+        Returns:
+            bool: True if sorting is successful, otherwise False.
+        """
         if not instructions:
             return False
         for field_name, _ in instructions:
@@ -102,6 +148,11 @@ class RecordService:
             )
         return True 
     def parse_sort_expression(self, text):
+
+        """Parse a sort expression in the format "Field asc, Field2 desc".
+        Args:       text (str): The sort expression to parse.                                       
+        Returns:    Optional[List[SortInstruction]]: The parsed sort instructions as a list of (field, descending) tuples, or None if the expression is invalid.
+        """
         if not text.strip():
             return None
         parts = [p.strip() for p in text.split(",") if p.strip()]
@@ -127,3 +178,62 @@ class RecordService:
             if not matched:
                 return None 
         return instructions
+    def parse_search_expression(self, text: str) -> Optional[List[SearchInstruction]]:
+        """
+        Parse a search expression in the format "Field:Value".
+        Args:
+            text (str): The search expression to parse.
+        Returns:
+            Optional[List[SearchInstruction]]: The parsed search instructions or None if invalid.
+        """
+        if not text.strip():
+            return None
+        parts = [p.strip() for p in text.split(",") if p.strip()]
+        instructions = List[SearchInstruction] = []
+        field_lookup: Dict[str, str] = {field.lower(): field for field in FIELDS}
+
+        for part in parts:
+            if "=" not in part:
+                return None
+            raw_field, value = part.split("=", 1)
+            field_name = raw_field.strip().lower()
+            Search_value = raw_value.strip()
+
+            if field_name not in field_lookup or not Search_value == "":
+                return None
+            instructions.append((field_lookup[field_name], Search_value))
+        return instructions
+    def search_records_multi(self, instructions: List[SearchInstruction]) -> List[Tuple[int, Record]]:
+        """
+        Search records based on multiple field-value pairs.
+        Args:
+            instructions (List[SearchInstruction]): The search instructions as a list of (field, value) tuples.
+        Returns:
+            List[Tuple[int, Record]]: A list of matching records with their indices.
+        """
+        results = List [tuple[int, Record]] = []
+        if not instructions:
+            return results
+        for index, record in enumerate(self.records):
+            matched_all = True
+
+            for field_name, search_text in instructions:
+                record_value = str(record.get_value(field_name)).strip().lower()
+                if record_value != search_text.strip().lower():
+                    matched_all = False
+                    break
+                if matched_all:
+                    results.append((index, record))
+        return results
+    def search_records_multi_from_text(self, text: str) -> Optional[List[Tuple[int, Record]]]:
+        """Perform a multi-criteria search based on a text expression.
+        Args:            
+        text (str): The search expression in the format "Field=Value, Field2=Value2".      
+        Returns:            
+        Optional[List[Tuple[int, Record]]]: A list of matching records with their indices, or None if the expression is invalid.
+        """
+
+        instructions = self.parse_search_expression(text)
+        if instructions is None:
+            return None
+        return self.search_records_multi(instructions)
