@@ -24,16 +24,29 @@ from practical_project_4.controller.record_controller import RecordController
 from practical_project_4.model.record import Record, FIELDS
 
 class CliView: 
+    """Command-line interface view class that interacts with the user and communicates with the RecordController to perform various operations on the records, including displaying, creating, editing, deleting, sorting, and searching records in memory.
+    """
     def __init__(self, controller: RecordController, full_name: str) -> None:
+        """Initialize the CliView with a RecordController instance and the full name of the program author.
+        Args:      controller (RecordController): The controller instance to manage records.        
+            full_name (str): The full name of the program author to display in the banner.
+            Returns:      None
+        """
         self.controller = controller
         self.full_name = full_name
     
     def _banner(self) -> None:
+        """Display a banner with the program author's name at the top of the console interface.
+        Returns:      None
+        """
         print("\n" + "=" * 60)
         print(f"Program by {self.full_name}")
         print("=" * 60)
 
     def run(self) -> None:
+        """Run the main loop of the CLI view, displaying a menu of options to the user and handling their input to perform various operations on the records using the RecordController.
+        Returns:      None  
+        """
         try:
             self.controller.init()
         except Exception as e:
@@ -43,7 +56,10 @@ class CliView:
             return
     
         while True:
+      
             self._banner()
+            """Display the main menu options to the user.
+            The menu includes options to reload the dataset, export data to a new CSV file, display one or multiple records, create a new record, edit an existing record, delete a record, and sort records by column(s). The user can choose an option by entering the corresponding number."""
             print("1] Reload dataset (replace in memory data)")
             print("2] Export in-memory data to New CSV ")
             print("3] Display One Record")
@@ -51,8 +67,9 @@ class CliView:
             print("5] Create New Record")
             print("6] Edit record")
             print("7] Delete a record")
-            print("8] Sort records by column")
+            print("8] Sort records by one column")
             print("9] Sort records by Multiple columns")
+            print("10] Search/Filter records by multiple columns") #New Feature (DhruvSharma)
             print("0] Exit.....")
             choice = input("\n Choose an Option: ").strip()
 
@@ -76,6 +93,8 @@ class CliView:
                 self._sort_records()
             elif choice == "9":
                 self._sort_records()
+            elif choice == "10":
+                self._search_multiple_fields()
             elif choice == "0":
                 self._banner()
                 print("Bye See you next time..")
@@ -84,10 +103,19 @@ class CliView:
                 print("oops Invalid choice..")
                 input("Press Enter")
     def _read_index(self) -> Optional[int]:
+        """Read a record index from user input and validate it. 
+            The method prompts the user to enter a record index (0-based) and checks if the input is a valid integer. If the input is valid, it returns the index as an integer; otherwise, it returns None.
+            Returns:      Optional[int]: The record index entered by the user, or None if the input is invalid.
+        """
         raw = input("enter record index (0 Based): ").strip()
         return int(raw) if raw.isdigit() else None
     
     def _print_record(self, index: int, rec: Record) -> None:
+        """
+        Print the details of a single record to the console in a formatted manner.
+        Args:      index (int): The index of the record to display. 
+                rec (Record): The record object containing the data to display.
+        """
         print("-" * 60)
         print(f"Record #{index}")
         for f in FIELDS:
@@ -95,6 +123,8 @@ class CliView:
         print("-" * 60)
 
     def _reload(self) -> None:
+        """Reload the dataset by calling the reload_data method of the RecordController. This method replaces the in-memory data with the first 100 records from the CSV file. If the reload is successful, it prints a success message; otherwise, it catches any exceptions and prints an error message.
+        """
         try:
             self.controller.reload_data()
             print("Reloaded Dataset successfully")
@@ -103,6 +133,8 @@ class CliView:
         input("Press Entet...")
 
     def _export(self) -> None:
+        """Export the current in-memory records to a new CSV file by calling the export_data method of the RecordController. This method attempts to export the data and prints the file path of the exported CSV file if successful. If any exceptions occur during the export process, it catches them and prints an error message.
+        """
         try:
             path = self.controller.export_data()
             print(f"Exported to: {path}")
@@ -111,6 +143,8 @@ class CliView:
         input("Press Enter")
 
     def _display_one(self) -> None:
+        """Display a single record based on user input. The method prompts the user to enter a record index, retrieves the corresponding record using the RecordController, and prints the record details to the console. If the index is invalid or the record is not found, it prints an appropriate message. 
+        """
         idx = self._read_index()
         if idx is None:
             print("Invalid Index...")
@@ -124,6 +158,9 @@ class CliView:
         input("Press Enter...")
 
     def _display_many(self) -> None:
+        """
+        Display multiple records to the console. The method retrieves all records currently in memory using the RecordController and prompts the user to enter how many records they want to display. It then prints the specified number of records in a formatted manner. If there are no records loaded or if the user enters an invalid number, it prints an appropriate message.
+        """
         records = self.controller.get_all()
         if  not records:
             print("No records loadeed..")
@@ -143,6 +180,9 @@ class CliView:
         input("Preess Enter..")
 
     def _create(self) -> None:
+        """
+        Create a new record by prompting the user to enter values for each field. The method initializes an empty record and iterates through the predefined fields, asking the user to input a value for each field. The entered values are stored in the record's data dictionary. After all fields have been filled, the new record is added to the in-memory list using the RecordController, and a success message is printed.
+        """
         rec = Record.empty()
         print("Enter Values for each field: ")
         for f in FIELDS:
@@ -152,6 +192,9 @@ class CliView:
         input("Press Enter..")
 
     def _edit(self) -> None:
+        """
+        Edit an existing record by prompting the user to enter a record index and new values for each field. The method first reads a record index from the user and retrieves the corresponding record using the RecordController. If the index is valid and the record is found, it initializes a new empty record and prompts the user to enter new values for each field, allowing them to press Enter to keep the existing value. The updated record is then saved using the RecordController's edit method, and a success or failure message is printed based on the result.
+        """
         idx = self._read_index()
         if idx is None:
             print("Invalid Index..")
@@ -173,6 +216,8 @@ class CliView:
         input("Enter PRess..")
 
     def _delete(self) -> None:
+        """Delete a record by prompting the user to enter a record index. The method reads a record index from the user and asks for confirmation before deleting the record. If the user confirms, it calls the delete method of the RecordController to remove the record from the in-memory list and prints a success or failure message based on the result. If the index is invalid, it prints an appropriate message.
+        """
         idx = self._read_index()
         if idx is None:
             print("Invalid Index")
@@ -187,6 +232,8 @@ class CliView:
         print("Deleted." if self.controller.delete(idx) else "Delete Failed")
         input("Press Enter..")
     def _sort_records(self) -> None:
+        """Sort the in-memory records by a specified field. The method displays the available fields for sorting and prompts the user to enter a sort expression (e.g., "Area asc" or "Count desc"). It then calls the sort_records_multi_from_text method of the RecordController to perform the sorting based on the user's input. If the sorting is successful, it prints a success message; otherwise, it prints an error message indicating that the sorting failed.
+        """
         print("\n Available fields for sorting")
         for index, field in enumerate(FIELDS, start=1):
             print(f"{index}] {field}")
@@ -197,3 +244,68 @@ class CliView:
         else:
             print("Sorting failed. Please enter a valid field name.")
         input("Press Enter to continue...")
+    def _search_multiple_fields(self) -> None:
+
+
+        print("\nSelect columns to search (comma separated):")
+
+        valid_fields = {
+            1: "Site identification",
+            2: "Area",
+            3: "Visit date",
+            5: "Species code",
+            6: "Count"
+        }
+
+        for num, field in valid_fields.items():
+            print(f"{num}] {field}")
+
+        selected = input("\nEnter column numbers (e.g. 1,2,5): ").strip()
+
+        if not selected:
+            print("No selection made.")
+            input("Press Enter...")
+            return
+
+        try:
+            selected_nums = [int(x.strip()) for x in selected.split(",")]
+        except ValueError:
+            print("Invalid input.")
+            input("Press Enter...")
+            return
+
+        criteria = {}
+
+
+        for num in selected_nums:
+            if num not in valid_fields:
+                print(f"Invalid column: {num}")
+                input("Press Enter...")
+                return
+
+            field_name = valid_fields[num]
+
+
+            value = input(f"Enter value for {field_name}: ").strip()
+
+            if value == "":
+                print("Empty value not allowed.")
+                input("Press Enter...")
+                return
+
+            criteria[field_name] = value
+
+
+        results = self.controller.search_by_selected_fields(criteria)
+
+        if not results:
+            print("\nNo matching records found.")
+            input("Press Enter...")
+            return
+
+        print(f"\nFound {len(results)} matching record(s):")
+
+        for index, record in results:
+            self._print_record(index, record)
+
+        input("Press Enter...")

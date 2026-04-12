@@ -23,38 +23,90 @@ from typing import List, Optional
 from practical_project_4.model.record import Record
 from practical_project_4.business.record_service import RecordService
 
+
 class RecordController:
+    """Controller class that connects the view with the RecordService. It provides methods to handle user requests and interact with the business logic layer to manage records in memory, including loading data, adding, updating, deleting records, and sorting them based on specified fields.
+    """
+
     def __init__(self, service: RecordService) -> None:
+        """Initialize the RecordController with a RecordService instance.
+        Args:      service (RecordService): The service instance to manage records.
+        Returns:    None    
+        """
         self.service = service
-    
-    def init(self) -> None: 
+
+    def init(self) -> None:
+        """Initialize the controller by loading the initial dataset into memory using the RecordService.
+        Returns:      None
+        """
         self.service.startup_load()
-    
+
     def reload_data(self) -> None:
+        """Reload the dataset, replacing the in-memory data with the first 100 records from the CSV file using the RecordService.
+        Returns:      None  
+        """
         self.service.reload()
-    
+
     def export_data(self) -> str:
+        """Export the current in-memory records to a new CSV file with a UUID filename using the RecordService.
+        Returns:      str: The file path of the exported CSV file.
+        """
         return self.service.export()
-        
+
     def get_all(self) -> List[Record]:
+        """Get a list of all records currently in memory using the RecordService.
+        Returns:      List[Record]: A list of all records currently stored in memory.
+        """
         return self.service.list_all()
-    
+
     def get_one(self, index: int) -> Optional[Record]:
+        """Get a single record by its index in the in-memory list using the RecordService.
+        Args:      index (int): The index of the record to retrieve.            
+        Returns:    Optional[Record]: The record at the specified index, or None if the index is out of range.
+        """
         return self.service.get_by_index(index)
-    
+
     def add(self, record: Record) -> None:
+        """Add a new record to the in-memory list using the RecordService.
+        Args:      record (Record): The record to add to the in-memory list.
+        """
         self.service.add(record)
-    
+
     def edit(self, index: int, record: Record) -> bool:
+        """Edit an existing record in the in-memory list using the RecordService.
+        Args:      index (int): The index of the record to update.
+               record (Record): The new record data to replace the existing record.
+        Returns:      bool: True if the update is successful, otherwise False.
+        """
         return self.service.update(index, record)
-    
+
     def delete(self, index: int) -> bool:
+        """Delete a record from the in-memory list using the RecordService.
+        Args:      index (int): The index of the record to delete.  
+        Returns:      bool: True if the deletion is successful, otherwise False.
+        """
         return self.service.delete(index)
+
     def sort_records(self, field_name: str, descending: bool = False) -> bool:
+        """Sort the in-memory records by a specified field using the RecordService.
+        Args:      field_name (str): The name of the field to sort by.
+               descending (bool): Whether to sort in descending order (default is False for ascending). 
+        Returns:      bool: True if the sorting is successful, otherwise False.
+        """
         return self.service.sort_records(field_name, descending)
-    def sort_records_multi_from_text(self, text):
-        instructions = self.service.parse_sort_expression(text) #Dhruv Sharma
+
+    def sort_records_multi_from_text(self, text: str) -> bool:
+        """
+        Sort the in-memory records by multiple fields based on a text input using the RecordService.
+        Args:      text (str): A text input specifying the sort fields and order (e.g., "Area desc, Visit date asc").
+        Returns:      bool: True if the sorting is successful, otherwise False.
+        """
+        instructions = self.service.parse_sort_expression(text)  # Dhruv Sharma
         if instructions is None:
             return False
-        
+
         return self.service.sort_records_multi(instructions)
+
+
+    def search_by_selected_fields(self, criteria: dict):
+        return self.service.search_by_selected_fields(criteria)
