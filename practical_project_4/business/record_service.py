@@ -98,6 +98,9 @@ class RecordService:
             return True
         return False
     
+    def search_by_selected_fields(self, criteria: dict):
+        return self.service.search_by_selected_fields(criteria)
+    
     def sort_records(self, field_name: str, descending: bool = False) -> bool:
         """
         Sort records based on a selected dataset column.
@@ -178,62 +181,19 @@ class RecordService:
             if not matched:
                 return None 
         return instructions
-    def parse_search_expression(self, text: str) -> Optional[List[SearchInstruction]]:
-        """
-        Parse a search expression in the format "Field:Value".
-        Args:
-            text (str): The search expression to parse.
-        Returns:
-            Optional[List[SearchInstruction]]: The parsed search instructions or None if invalid.
-        """
-        if not text.strip():
-            return None
-        parts = [p.strip() for p in text.split(",") if p.strip()]
-        instructions = List[SearchInstruction] = []
-        field_lookup: Dict[str, str] = {field.lower(): field for field in FIELDS}
+    def search_by_selected_fields(self, criteria: dict):
+        results = []
 
-        for part in parts:
-            if "=" not in part:
-                return None
-            raw_field, value = part.split("=", 1)
-            field_name = raw_field.strip().lower()
-            Search_value = raw_value.strip()
-
-            if field_name not in field_lookup or not Search_value == "":
-                return None
-            instructions.append((field_lookup[field_name], Search_value))
-        return instructions
-    def search_records_multi(self, instructions: List[SearchInstruction]) -> List[Tuple[int, Record]]:
-        """
-        Search records based on multiple field-value pairs.
-        Args:
-            instructions (List[SearchInstruction]): The search instructions as a list of (field, value) tuples.
-        Returns:
-            List[Tuple[int, Record]]: A list of matching records with their indices.
-        """
-        results = List [tuple[int, Record]] = []
-        if not instructions:
-            return results
         for index, record in enumerate(self.records):
-            matched_all = True
+            match = True
 
-            for field_name, search_text in instructions:
-                record_value = str(record.get_value(field_name)).strip().lower()
-                if record_value != search_text.strip().lower():
-                    matched_all = False
+            for field, value in criteria.items():
+                record_value = str(record.get_value(field)).lower()
+
+                if value.lower() not in record_value:
+                    match = False
                     break
-                if matched_all:
-                    results.append((index, record))
-        return results
-    def search_records_multi_from_text(self, text: str) -> Optional[List[Tuple[int, Record]]]:
-        """Perform a multi-criteria search based on a text expression.
-        Args:            
-        text (str): The search expression in the format "Field=Value, Field2=Value2".      
-        Returns:            
-        Optional[List[Tuple[int, Record]]]: A list of matching records with their indices, or None if the expression is invalid.
-        """
 
-        instructions = self.parse_search_expression(text)
-        if instructions is None:
-            return None
-        return self.search_records_multi(instructions)
+            if match:
+                results.append((index, record))
+        return results
