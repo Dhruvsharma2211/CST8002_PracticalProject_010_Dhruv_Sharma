@@ -23,6 +23,7 @@ from typing import Optional
 from practical_project_4.controller.record_controller import RecordController
 from practical_project_4.model.record import Record, FIELDS
 
+
 class CliView: 
     """Command-line interface view class that interacts with the user and communicates with the RecordController to perform various operations on the records, including displaying, creating, editing, deleting, sorting, and searching records in memory.
     """
@@ -245,7 +246,8 @@ class CliView:
             print("Sorting failed. Please enter a valid field name.")
         input("Press Enter to continue...")
     def _search_multiple_fields(self) -> None:
-
+        """Search records by multiple fields based on user input. The method displays the available fields for searching and prompts the user to select which fields they want to search by entering the corresponding numbers. It then asks the user to enter a search value for each selected field. The search criteria are collected in a dictionary and passed to the search_by_selected_fields method of the RecordController. The method then displays the matching records or an appropriate message if no matches are found.
+        """
 
         print("\nSelect columns to search (comma separated):")
 
