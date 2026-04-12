@@ -17,6 +17,9 @@ Reference:
 [4] 	D. Hillard, "Effective Python Testing With pytest," realpython.com, 08 Dev 2024. [Online]. Available: https://realpython.com/pytest-python-testing/. [Accessed 22 02 2026].
 [5] 	R. Oliveira, "GUID vs UUID vs ULID: Understanding Unique Identifiers," medium.com, 31 Jul 2024. [Online]. Available: https://medium.com/@ronaldo.oliver7/guid-vs-uuid-vs-ulid-understanding-unique-identifiers-565c88cdca13. [Accessed 22 Feb 2026].
 [6] 	C. Team, "MVC Architecture Explained: Model, View, Controller," codecademy.com, N.D.. [Online]. Available: https://www.codecademy.com/article/mvc-architecture-model-view-controller. [Accessed 22 Feb 2026].
+[7] 	Parks Canada, "Migratory Shorebird Habitat Use - Pacific Rim," open.canada.ca, 01 Oct 2017. [Online]. Available: https://open.canada.ca/data/en/dataset/e0aa39b6-67c0-4863-bdad-d74e73870697. [Accessed 02 April 2026].
+[8] 	www.geeksforgeeks.org, "Searching Algorithms in Python," www.geeksforgeeks.org, 04 Sep 2025. [Online]. Available: https://www.geeksforgeeks.org/dsa/searching-algorithms-in-python/. [Accessed 10 April 2026].
+[9] 	R. Sharma, "Master Searching algorithms With Python in one shot," Medium.com, 21 June 2024. [Online]. Available: https://medium.com/pythoneers/master-searching-algorithms-with-python-in-one-shot-5f9eec198d43. [Accessed 12 04 2026].
 """
 
 from typing import Optional
@@ -262,7 +265,7 @@ class CliView:
         for num, field in valid_fields.items():
             print(f"{num}] {field}")
 
-        selected = input("\nEnter column numbers (e.g. 1,2,5): ").strip()
+        selected = input("\nEnter column numbers (e.g. 1,2,5): ").strip() #Dhruv Sharma
 
         if not selected:
             print("No selection made.")
@@ -295,7 +298,7 @@ class CliView:
                 input("Press Enter...")
                 return
 
-            criteria[field_name] = value
+            criteria[field_name] = value #Dhruv Sharma
 
 
         results = self.controller.search_by_selected_fields(criteria)
